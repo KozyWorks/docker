@@ -1,0 +1,19 @@
+name: mongodb
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - ${DATABASE_LOCATION}:/data/db
+    ports:
+      - "${DATABASE_PORT:-27017}:27017"
+    restart: unless-stopped
+    networks:
+      - database
+
+networks:
+  database:
+    external: true
