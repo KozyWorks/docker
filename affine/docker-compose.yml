@@ -3,8 +3,8 @@ services:
   affine:
     image: ghcr.io/toeverything/affine-graphql:${AFFINE_REVISION:-stable}
     container_name: affine_server
-    ports:
-      - "${PORT:-3010}:3010"
+    # ports:
+    #   - "${PORT:-3010}:3010"
     depends_on:
       redis:
         condition: service_healthy
@@ -85,20 +85,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
-    networks:
-      - network
-      - reverse_proxy
-
-  nginx:
-    image: nginx:latest
-    container_name: affine_nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - affine
     restart: unless-stopped
     networks:
       - network
