@@ -3,11 +3,11 @@ services:
   redis:
     image: redis:latest
     container_name: redis
-    command: redis-server --appendonly yes --requirepass ${DATABASE_PASSWORD}
+    command: redis-server --appendonly yes --requirepass ${DB_PASSWORD}
     volumes:
-      - ${DATABASE_LOCATION}:/data
+      - ${DB_DATA_LOCATION}:/data
     ports:
-      - "${DATABASE_PORT:-6379}:6379"
+      - "${PORT:-6379}:6379"
     restart: unless-stopped
     networks:
       - database

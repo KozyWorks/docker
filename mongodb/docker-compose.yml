@@ -5,11 +5,11 @@ services:
     container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ${DATABASE_LOCATION}:/data/db
+      - ${DB_DATA_LOCATION}:/data/db
     ports:
-      - "${DATABASE_PORT:-27017}:27017"
+      - "${PORT:-27017}:27017"
     restart: unless-stopped
     networks:
       - database

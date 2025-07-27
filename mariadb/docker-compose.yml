@@ -1,0 +1,17 @@
+services:
+  mariadb:
+    image: mariadb:11.3
+    container_name: mariadb
+    restart: unless-stopped
+    ports:
+      - "3306:3306" # Optional; you can remove this if you only connect via internal containers
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD} # Reuse your .env variable
+    volumes:
+      - ${DB_DATA_LOCATION}:/var/lib/mysql
+    networks:
+      - database
+
+networks:
+  database:
+    external: true
