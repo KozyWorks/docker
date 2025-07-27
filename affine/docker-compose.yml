@@ -1,7 +1,7 @@
 name: affine
 services:
   affine:
-    image: ghcr.io/toeverything/affine-graphql:${AFFINE_REVISION:-stable}
+    image: ghcr.io/toeverything/affine:${AFFINE_REVISION:-stable}
     container_name: affine_server
     # ports:
     #   - "${PORT:-3010}:3010"
@@ -24,11 +24,10 @@ services:
       - AFFINE_INDEXER_ENABLED=false
     restart: unless-stopped
     networks:
-      - network
       - reverse_proxy
 
   affine_migration:
-    image: ghcr.io/toeverything/affine-graphql:${AFFINE_REVISION:-stable}
+    image: ghcr.io/toeverything/affine:${AFFINE_REVISION:-stable}
     container_name: affine_migration_job
     volumes:
       # custom configurations
@@ -47,7 +46,6 @@ services:
       redis:
         condition: service_healthy
     networks:
-      - network
       - reverse_proxy
 
   redis:
@@ -62,7 +60,6 @@ services:
       retries: 5
     restart: unless-stopped
     networks:
-      - network
       - reverse_proxy
 
   postgres:
@@ -87,11 +84,8 @@ services:
       retries: 5
     restart: unless-stopped
     networks:
-      - network
       - reverse_proxy
 
 networks:
-  network:
-    driver: bridge
   reverse_proxy:
     external: true
